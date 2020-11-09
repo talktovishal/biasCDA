@@ -25,7 +25,7 @@ Please cite as:
 ```
 ## Requirements
 * Python version >= 3.6
-* Pytorch
+* Pytorch version = 1.2
 
 ## Running and Training
 We provide pre-trained models for French and Spanish in the `models` folder.
