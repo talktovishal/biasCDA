@@ -27,9 +27,9 @@ Please cite as:
 * Python version >= 3.6
 * Pytorch version = 1.2
 * Installation instructions:
-conda create --name py36-pytorch1.2 python=3.6
-conda activate py36-pytorch1.2
-conda uninstall pytorch
+conda create --name py36-pytorch1.2 python=3.6 \
+conda activate py36-pytorch1.2 \
+conda uninstall pytorch \
 conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=10.0 -c pytorch
 
 
@@ -70,7 +70,48 @@ python biasCDA/src/neural-mrf.py --data /home/nlpsrv/biasCDA/treebanks/UD_Spanis
 
 
 ## Udify standalone
-Reference:
+
+I ended up using udify but turns out it needs input in conllu format. The good thing is it is the SOTA and gives us gender tags that we need. Hence, i am currently doing this in the steps:
+
+* Use stanza + spacy-conll to transform the text to a conllu format
+* Then use predict code for udify directly to get all the required tags
+* We then can feed this for CDA
+* Thus, ideally, we should use udify with pacy but that's TBD.
+
+Installation
+* pip install spacy_conll
+* pip install spacy-stanza
+* Python code:
+```
+python
+# https://stanfordnlp.github.io/stanza/installation_usage.html
+# https://github.com/stephantul/spacy_conll
+import stanza
+stanza.download('en')
+from spacy_conll import init_parser
+# Initialise English parser, already including the ConllFormatter as a pipeline component.
+# Indicate that we want to get the CoNLL headers in the string output.
+# `use_gpu` and `verbose` are specific to stanza (and stanfordnlp). These keywords arguments
+# are passed onto their Pipeline() initialisation
+nlp = init_parser("stanza", "en", parser_opts={"use_gpu": True, "verbose": False}, include_headers=True)
+# Parse a given string
+doc = nlp("The doctor is goign home as she is tired.")
+
+# Get the CoNLL representation of the whole document, including headers
+conll = doc._.conll_str
+print(conll)
+
+f = open("stanza-conllu-input.txt", "a")
+f.write(conll)
+f.close()
+
+CTRL-Z
+cd udify/udify/
+python predict.py logs/udify-model.tar.gz ../../stanza-conllu-input.txt logs/pred-stanza.conllu
+```
+
+
+Reference: \
 https://github.com/hyperparticle/udify
 
 ```
@@ -82,9 +123,27 @@ python predict.py logs/udify-model.tar.gz data/ud-treebanks-v2.3/UD_English-EWT/
 python predict.py logs/udify-model.tar.gz data/ud-treebanks-v2.3/UD_English-EWT/en_ewt-ud-dev.txt logs/pred.conllu --eval_file logs/pred.json
 ```
 
+https://course.spacy.io/en/ \
+https://spacy.io/usage/spacy-101#annotations-pos-deps \
+https://spacy.io/api/doc
+
+Another conllu generator #1\
+https://spacy.io/universe/project/spacy-conll \
+https://pypi.org/project/spacy-udpipe/
+
+Another conllu generator #2\
+https://github.com/explosion/spacy-stanza
+
+https://github.com/stephantul/spacy_conll \
+https://spacy.io/usage/visualizers
+
+
+
 
 ## Udify with spacy
-https://github.com/PKSHATechnology-Research/camphr
+TODO: I could not get it to work!!!
+
+https://github.com/PKSHATechnology-Research/camphr \
 https://camphr.readthedocs.io/en/latest/notes/udify.html
 
 ```
@@ -107,15 +166,4 @@ Using the 'dep' visualizer
 Serving on http://<ip-addrress>:5000 ...
 ```
 
-## Spacy & POS tagging
-https://course.spacy.io/en/
-https://spacy.io/usage/spacy-101#annotations-pos-deps
-https://spacy.io/api/doc
-
-Another conllu generator
-https://spacy.io/universe/project/spacy-conll
-https://pypi.org/project/spacy-udpipe/
-
-https://github.com/stephantul/spacy_conll
-https://spacy.io/usage/visualizers
 
