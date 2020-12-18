@@ -95,7 +95,7 @@ from spacy_conll import init_parser
 # are passed onto their Pipeline() initialisation
 nlp = init_parser("stanza", "en", parser_opts={"use_gpu": True, "verbose": False}, include_headers=True)
 # Parse a given string
-doc = nlp("The doctor is goign home as she is tired.")
+doc = nlp("The doctor is going home as she is tired.")
 
 # Get the CoNLL representation of the whole document, including headers
 conll = doc._.conll_str
