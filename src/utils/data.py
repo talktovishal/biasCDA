@@ -113,6 +113,7 @@ def get_sentence_text(sentence):
     :param sentence: UD sentence
     :return: text version of the UD sentence
     """
+    print(f"get_sentence_text from conllu=\n{type(sentence)}\n{sentence}\n")
     text = ""
     for token in sentence:
         if not token.is_multiword() and token.form:

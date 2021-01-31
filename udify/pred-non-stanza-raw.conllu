@@ -1,0 +1,15 @@
+{"arc_loss": 0.003819472622126341, "tag_loss": 0.0023591313511133194, "words": ["The", "doctor", "is", "going", "home", "as", "he", "is", "tired", "."], "ids": "None", "multiword_ids": "None", "multiword_forms": "None", "predicted_dependencies": ["det", "nsubj", "aux", "root", "advmod", "mark", "nsubj", "cop", "advcl", "punct"], "predicted_heads": [2, 4, 4, 0, 4, 9, 9, 9, 4, 4], "feats": ["Definite=Def|PronType=Art", "Number=Sing", "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin", "Tense=Pres|VerbForm=Part", "_", "_", "Case=Nom|Gender=Masc|Number=Sing|Person=3|PronType=Prs", "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin", "Degree=Pos", "_"], "lemmas": ["the", "doctor", "be", "go", "home", "as", "he", "be", "tired", "."], "upos": ["DET", "NOUN", "AUX", "VERB", "ADV", "SCONJ", "PRON", "AUX", "ADJ", "PUNCT"]}
+
+
+[
+"Definite=Def|PronType=Art", 
+"Number=Sing", 
+"Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin", 
+"Tense=Pres|VerbForm=Part", 
+"_", 
+"_", 
+"Case=Nom|Gender=Masc|Number=Sing|Person=3|PronType=Prs", 
+"Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin", 
+"Degree=Pos", 
+"_"
+]

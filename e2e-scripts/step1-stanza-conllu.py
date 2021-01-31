@@ -5,7 +5,7 @@ def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 #source activate py36-udify-direct
-#python biasCDA/e2e-scripts/step1-stanza-conllu.py
+#python biasCDA/biasCDA/e2e-scripts/step1-stanza-conllu.py
 ##subprocess.call(["source activate", "py36-udify-direct"])
 ##install('stanza')
 
@@ -20,11 +20,31 @@ from spacy_conll import init_parser
 nlp = init_parser("stanza", "en", parser_opts={"use_gpu": True, "verbose": False}, include_headers=True)
 
 
+def getCampherConlluStr(line):
+            """
+            conda activate CampherNlp
+            wget https://github.com/PKSHATechnology-Research/camphr_models/releases/download/0.7.0/en_udify-0.7.tar.gz
+            pip install en_udify-0.7.tar.gz
+            pip install en_udify-0.7.tar.gz -b /home/nlpsrv/tempdir
+            pip install camphr-allennlp
+            pip install spacy_conll
+
+            python
+import spacy
+from spacy_conll import init_parser
+nlp = spacy.load("en_udify")
+doc = nlp("The doctor is going home as she is tired.")
+print(doc._.conll_str)
+            """
+
+
+
 def getConlluStr(line):
     #print("Line{}: {}".format(count, line.strip())) 
     myStr = line.strip()
     try:
         if not "".__eq__(myStr):
+
             # Parse a given string
             doc = nlp(myStr)
 
@@ -65,15 +85,19 @@ filePtr = open(filePath, 'r')
 Lines = filePtr.readlines()
 print(type(Lines))
 
-#inputs = Lines[1:10]
-inputs = Lines
+#inputs = Lines
+inputs = Lines[1:5]
 inputsLength = len(inputs)
-outputLines = Parallel(n_jobs=9)(delayed(getConlluStr)(inputs[i]) for i in tqdm(range(inputsLength)))
+outputLines = []
+##outputLines = Parallel(n_jobs=9)(delayed(getConlluStr)(inputs[i]) for i in tqdm(range(inputsLength)))
+for inputLine in inputs:
+    outputLines.append(getConlluStr(inputLine))
 
 outputFile = open(filePath + ".conllu-input.txt", "w")
 outputFile.writelines("%s\n" % conllu for conllu in outputLines)
 outputFile.close()
 
+print(f'done processing. output filename={outputFile}')
 
 # When running with max parallelism
 
@@ -119,3 +143,16 @@ outputFile.close()
 #   File "/home/nlpsrv/anaconda3/envs/py36-udify-direct/lib/python3.6/concurrent/futures/_base.py", line 384, in __get_result
 #     raise self._exception
 # joblib.externals.loky.process_executor.BrokenProcessPool: A task has failed to un-serialize. Please ensure that the arguments of the function are all picklable.
+
+
+################ download file ############################
+# '''
+# Python 3.6.12 |Anaconda, Inc.| (default, Sep  8 2020, 23:10:56)
+# [GCC 7.3.0] on linux
+# Type "help", "copyright", "credits" or "license" for more information.
+# >>> import stanza
+# >>> stanza.download('en')
+# Downloading https://raw.githubusercontent.com/stanfordnlp/stanza-resources/master/resources_1.1.0.json: 122kB [00:00, 29.8MB/s]
+# 2021-01-12 14:10:41 INFO: Downloading default packages for language: en (English)...
+# 2021-01-12 14:10:42 INFO: File exists: /home/nlpsrv/stanza_resources/en/default.zip.
+# '''

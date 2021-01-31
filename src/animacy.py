@@ -38,8 +38,10 @@ def get_animate_samples(conll, animate_file, use_v1, hack_v2):
     :param hack_v2: True if sentence should be made into UD V2 from V1.2
     :return: list of SentenceConversion objects
     """
+    print(f"animate_file = {animate_file}")
     with open(animate_file, "r") as f:
         lines = f.readlines()
+    print(f"lines count = {len(lines)}")
     lines = [line.strip().split("\t") for line in lines]
     words = [line[1] for line in lines] + [line[2] for line in lines]
 

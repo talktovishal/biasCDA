@@ -54,7 +54,7 @@ def main():
             while not_empty:
                 print("  Partition", part)
                 # Load sentences
-                print("    Loading partition...")
+                print("    Loading partition 10000 sentences at a time...")
                 conll, not_empty = load_sentences(10000, f)
                 # Extract sentences with animate nouns
                 print("    Finding animate nouns...")

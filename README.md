@@ -33,6 +33,13 @@ conda uninstall pytorch \
 conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=10.0 -c pytorch
 
 
+conda create --name py36-pytorch1.7.1 python=3.6
+conda activate py36-pytorch1.7.1
+conda install pytorch==1.7.1
+torch
+
+
+
 ## Running and Training
 We provide pre-trained models for French and Spanish in the `models` folder.
 All input files should be in conllu format.
@@ -76,7 +83,7 @@ I ended up using udify but turns out it needs input in conllu format. The good t
 * Use stanza + spacy-conll to transform the text to a conllu format
 * Then use predict code for udify directly to get all the required tags
 * We then can feed this for CDA
-* Thus, ideally, we should use udify with pacy but that's TBD.
+* Thus, ideally, we should use udify with spacy but that's TBD.
 
 Installation
 * pip install spacy_conll
@@ -108,6 +115,8 @@ f.close()
 CTRL-Z
 cd udify/udify/
 python predict.py logs/udify-model.tar.gz ../../stanza-conllu-input.txt logs/pred-stanza.conllu
+
+ python predict.py logs/udify-model.tar.gz ../../stanza-conllu-input-raw.txt logs/pred-non-stanza-raw.conllu --raw_text
 ```
 
 

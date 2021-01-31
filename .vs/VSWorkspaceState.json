@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\animacy"
+    "\\animacy",
+    "\\e2e-scripts",
+    "\\src",
+    "\\src\\sigmorphon_reinflection",
+    "\\src\\utils"
   ],
   "PreviewInSolutionExplorer": false
 }
