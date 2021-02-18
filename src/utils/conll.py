@@ -1,4 +1,5 @@
 from pyconll import load_from_string
+import sys, traceback
 
 def load_sentences_from_file(n, file):
     count = 0

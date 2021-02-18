@@ -32,11 +32,13 @@ conda activate py36-pytorch1.2 \
 conda uninstall pytorch \
 conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=10.0 -c pytorch
 
-
-conda create --name py36-pytorch1.7.1 python=3.6
-conda activate py36-pytorch1.7.1
-conda install pytorch==1.7.1
-torch
+Additional dependencies:
+    - numpy
+    - scikit-learn
+    - pip:
+        - tqdm
+        - filelock
+        - pyconll
 
 
 
@@ -93,6 +95,7 @@ Installation
 python
 # https://stanfordnlp.github.io/stanza/installation_usage.html
 # https://github.com/stephantul/spacy_conll
+# using pip to install packages in coda env: https://stackoverflow.com/questions/41060382/using-pip-to-install-packages-to-anaconda-environment
 import stanza
 stanza.download('en')
 from spacy_conll import init_parser
@@ -114,7 +117,7 @@ f.close()
 
 CTRL-Z
 cd udify/udify/
-python predict.py logs/udify-model.tar.gz ../../stanza-conllu-input.txt logs/pred-stanza.conllu
+python predict.py logs/udify-model.tar.gz /home/nlpsrv/biasCDA/biasCDA/e2e-scripts/es-input.txt.conllu-input.txt logs/pred-stanza-es-mini.conllu
 
  python predict.py logs/udify-model.tar.gz ../../stanza-conllu-input-raw.txt logs/pred-non-stanza-raw.conllu --raw_text
 ```
